@@ -4,21 +4,52 @@
 
 ## 20230415
 ——Oracle相关操作
+
+时隔多年，重拾Oracle相关知识
+
 ### 用户修改密码、解锁
 
-```shell
-# 管理员登录
+```sql
+-- 管理员登录
 sqlplus / as sysdba
-# 解锁用户
+-- 解锁用户
 ALTER USER 用户名 ACCOUNT UNLOCK;
-# 修改密码
+-- 修改密码
 ALTER USER scott identified by "tiger";
-# 设置用户密码无限次尝试登录
+-- 设置用户密码无限次尝试登录
 ALTER PROFILE DEFAULT LIMIT FAILED_LOGIN_ATTEMPTS UNLIMITED;
-# 设置用户密码不过期
+-- 设置用户密码不过期
 ALTER PROFILE DEFAULT LIMIT PASSWORD_LIFE_TIME UNLIMITED;
 ```
 
+### 表空间与用户创建
+```sql
+CREATE TEMPORARY TABLESPACE NB_TEMP 
+		TEMPFILE 'e:\OracleData\NB_TEMP.DBF' 
+		SIZE 32M 
+		AUTOEXTEND ON 
+		NEXT 32M MAXSIZE UNLIMITED 
+		EXTENT MANAGEMENT LOCAL;
+		 
+CREATE TABLESPACE NB_DATA
+         LOGGING
+         DATAFILE 'e:\OracleData\NB_DATA.DBF'
+         SIZE 32M
+         AUTOEXTEND ON
+         NEXT 32M MAXSIZE UNLIMITED
+         EXTENT MANAGEMENT LOCAL;
+		 
+CREATE USER nb IDENTIFIED BY nb
+         ACCOUNT UNLOCK
+         DEFAULT TABLESPACE NB_DATA
+         TEMPORARY TABLESPACE NB_TEMP;
+		 
+GRANT CONNECT,RESOURCE TO nb;  --表示把 connect,resource 权限授予 nb 用户
+GRANT DBA TO nb;  --表示把 dba 权限授予给 nb 用户
+
+-- 用户会话编码
+select userenv('language') from dual;
+```
 ## 20230331
 ——感恩公司
 
