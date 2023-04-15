@@ -2,6 +2,23 @@
 
 [TOC]
 
+## 20230415
+——Oracle相关操作
+### 用户修改密码、解锁
+
+```shell
+# 管理员登录
+sqlplus / as sysdba
+# 解锁用户
+ALTER USER 用户名 ACCOUNT UNLOCK;
+# 修改密码
+ALTER USER scott identified by "tiger";
+# 设置用户密码无限次尝试登录
+ALTER PROFILE DEFAULT LIMIT FAILED_LOGIN_ATTEMPTS UNLIMITED;
+# 设置用户密码不过期
+ALTER PROFILE DEFAULT LIMIT PASSWORD_LIFE_TIME UNLIMITED;
+```
+
 ## 20230331
 ——感恩公司
 
