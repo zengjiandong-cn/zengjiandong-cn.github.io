@@ -7,6 +7,11 @@
 
 时隔多年，重拾Oracle相关知识
 
+### 查看数据库字符集
+```shell
+select * from v$nls_parameters where parameter = 'NLS_CHARACTERSET';
+```
+
 ### 用户修改密码、解锁
 
 ```sql
@@ -49,6 +54,18 @@ GRANT DBA TO nb;  --表示把 dba 权限授予给 nb 用户
 
 -- 用户会话编码
 select userenv('language') from dual;
+```
+### tnsnames.ora
+tnsnames.ora 为 Oracle客户端连接数据库所需配置文件
+```
+连接描述符名 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = 服务器地址)(PORT = 服务器端口号))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = 数据库服务名)
+    )
+  )
 ```
 ## 20230331
 ——感恩公司
